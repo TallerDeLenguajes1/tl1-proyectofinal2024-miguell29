@@ -1,5 +1,7 @@
 using ConsoleGame;
 
+namespace GameComplements;
+
 class Factory
 {
     
