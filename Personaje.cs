@@ -44,4 +44,20 @@ public class Personaje
     public int Armadura { get => armadura; set => armadura = value; }
     public int Salud { get => salud; set => salud = value; }
     public int Edad { get => edad; set => edad = value; }
+
+    public void MostrarDatos()
+    {
+        Console.WriteLine("----------> Datos del personaje:");
+        Console.WriteLine($"nombre: {nombre}");
+        Console.WriteLine($"apodo: {apodo}");
+        Console.WriteLine($"tipo: {tipo}");
+        Console.WriteLine($"fecha de nacimiento: {fechaNacimiento}");
+        Console.WriteLine($"edad: {edad}");
+        Console.WriteLine($"velocidad: {velocidad}");
+        Console.WriteLine($"destreza: {destreza}");
+        Console.WriteLine($"fuerza: {fuerza}");
+        Console.WriteLine($"nivel: {nivel}");
+        Console.WriteLine($"armadura: {armadura}");
+        Console.WriteLine($"salud: {salud}\n");
+    }
 }
