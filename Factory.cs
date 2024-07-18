@@ -3,7 +3,7 @@ using ConsoleGame;
 class Factory
 {
     
-    public static Character NewCharacter()
+    public static Personaje CreatePersonaje()
     {
         var num = new Random();
         //lista de tipos
@@ -24,7 +24,7 @@ class Factory
         var armadura = num.Next(1,11);
         var salud  = 100;
 
-        Character character = new Character(tipo,nombre,apodo,fecha,velociadad,destreza,fuerza,nivel,armadura,salud);
+        Personaje character = new Personaje(tipo,nombre,apodo,fecha,velociadad,destreza,fuerza,nivel,armadura,salud);
         return character;  
     }
 }

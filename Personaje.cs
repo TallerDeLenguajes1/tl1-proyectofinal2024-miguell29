@@ -1,7 +1,7 @@
 namespace ConsoleGame;
 
 
-public class Character
+public class Personaje
 {
     //*Datos
     string tipo;
@@ -18,7 +18,7 @@ public class Character
     int armadura;
     int salud;
     int edad;
-    public Character(string tipo, string nombre, string apodo, DateTime fechaNacimiento, int velocidad, int destreza, int fuerza, int nivel, int armadura, int salud)
+    public Personaje(string tipo, string nombre, string apodo, DateTime fechaNacimiento, int velocidad, int destreza, int fuerza, int nivel, int armadura, int salud)
     {
         this.tipo = tipo;
         this.nombre = nombre;
