@@ -60,4 +60,16 @@ public class Personaje
         Console.WriteLine($"armadura: {armadura}");
         Console.WriteLine($"salud: {salud}\n");
     }
+    public void Atacar(Personaje enemy)
+    {
+        var ataque = Destreza * Fuerza * Nivel;
+        var efectividad = new Random().Next(1,101);
+        var defensa = Armadura * Velocidad;
+        var constanteAjuste = 500;
+        var daño = ((ataque * efectividad) - defensa)/constanteAjuste;
+        enemy.Salud -= daño;
+        var saludRestante = (enemy.Salud > 0) ? enemy.Salud : 0;
+        Console.WriteLine($"{enemy.Nombre} recibe {daño} de daño");
+        Console.WriteLine($"Salud restante {saludRestante}");
+    }
 }

@@ -9,6 +9,10 @@ internal class Program
         {
             personaje.MostrarDatos();
         }
+        Thread.Sleep(2000); 
+        Console.Clear();
+        var juego = new Game(carga.Personajes);
+        juego.Play();
         Console.ReadKey();
     }
 }
