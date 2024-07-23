@@ -57,6 +57,7 @@ class Game
                 if (player.Salud > 0)
                 {
                     //TODO restaurar salud y mejorar nivel
+                    LevelUp(player);
                 }else
                 {
                     GameOver(player);
@@ -144,5 +145,18 @@ class Game
         Console.SetCursorPosition(20,10);
         Console.WriteLine($"******** El juego ha terminado ********");
         Console.WriteLine($"******** {player.Title.ToUpper()} {player.Name.ToUpper()} ha perdido ********");
-    }   
+    }
+    public void LevelUp(Personaje player)
+    {
+        Console.WriteLine(player.Name + " Subio de nivel");
+        Console.WriteLine("Curando Heridas...");
+        Console.WriteLine("Ataque Mejorado...");
+        Console.WriteLine("Defensa Mejorada...");
+        Console.WriteLine("Velocidad Mejorada...");
+        player.Nivel++;
+        //*La salud del personaje no debe superar la salud max
+        player.Salud = Math.Min(player.Salud + player.Stats.Hp * 0.3, player.Stats.Hp);
+        player.Stats.AttackDamage += player.Nivel * player.Stats.AttackDamagePerLevel;
+        Console.ReadKey(); 
+    }
 }

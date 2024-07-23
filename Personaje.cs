@@ -54,7 +54,7 @@ public class Personaje
         var efectividadDeAtaqueMin = Math.Min((Nivel-1)*10, 100);
         var efectividadDeAtaque = new Random().Next(efectividadDeAtaqueMin, 101) / 100.0;
         var efectividadDeDeefensaMin = Math.Min((enemy.Nivel-1)*10, 100);
-        var efectividadDeDefensa = new Random().Next(efectividadDeDeefensaMin, 50) / 100.0;;
+        var efectividadDeDefensa = new Random().Next(efectividadDeDeefensaMin, 101) / 200.0;;
         var defensa = enemy.Stats.Armor + (enemy.Stats.MoveSpeed * 0.1);
         var daño = (ataque * efectividadDeAtaque) - (defensa * efectividadDeDefensa);
 
