@@ -43,18 +43,6 @@ public class Personaje
         Console.WriteLine($"armadura: {Stats.Armor}");
         Console.WriteLine($"salud: {Stats.Hp}\n");
     }
-    //public void Atacar(Personaje enemy)
-    /*{
-        var ataque = Stats.AttackDamage * nivel;
-        var efectividad = new Random().Next(1, 101);
-        var defensa = Stats.Armor * Stats.MoveSpeed * 0.3;
-        var constanteAjuste = 500;
-        var daño = ((ataque * efectividad) - defensa) / constanteAjuste;
-        enemy.Stats.Hp -= daño;
-        var saludRestante = (enemy.Stats.Hp > 0) ? enemy.Stats.Hp : 0;
-        Console.WriteLine($"{enemy.Name} recibe {daño} de daño");
-        Console.WriteLine($"Salud restante {saludRestante}");
-    }*/
     public void Atacar(Personaje enemy)
     {
         var ataque = Stats.AttackDamage;
@@ -69,7 +57,7 @@ public class Personaje
         daño = Math.Max(daño, 0);
         enemy.Stats.Hp -= daño;
         var saludRestante = (enemy.Stats.Hp > 0) ? enemy.Stats.Hp : 0;
-        Console.WriteLine($"{enemy.Name} recibe {daño} de daño");
+        Console.WriteLine($"{enemy.Name} recibe {daño:F2} de daño");
         Console.WriteLine($"Salud restante: {saludRestante:F2}");
     }
 

@@ -46,6 +46,12 @@ class Game
                     player = enemy;
                     //TODO restaurar salud y mejorar nivel
                 }
+                //!Despues de cada ronda se eliminan la mitad de los personajes de la lista
+                for (int i = 0; i < personajes.Count/2; i++)
+                {
+                    personajes.RemoveAt(random.Next(personajes.Count));
+                }
+                Console.WriteLine($"Cantidad de enemigos restantes: {personajes.Count}");
                 continue;
             }
         }
