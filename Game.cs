@@ -38,7 +38,7 @@ class Game
                 personajes.Remove(enemy);
                 //*comienza la pelea
                 Figth(Player,enemy);
-                if (player.Salud > 0)
+                if (player.Stats.Hp > 0)
                 {
                     //TODO restaurar salud y mejorar nivel
                 }else
@@ -54,19 +54,19 @@ class Game
     }
     private void Figth(Personaje player1, Personaje player2)
     {
-        Console.WriteLine($"Inicio de la pelea entre {player1.Nombre} y {player2.Nombre}");
-        while (player1.Salud > 0 && player2.Salud > 0)
+        Console.WriteLine($"Inicio de la pelea entre {player1.Name} y {player2.Name}");
+        while (player1.Stats.Hp > 0 && player2.Stats.Hp > 0)
         {
             //TODO menú de acciones
             Thread.Sleep(500); 
             player1.Atacar(player2);
-            if (player2.Salud > 0)
+            if (player2.Stats.Hp > 0)
             {
                 Thread.Sleep(500);
                 player2.Atacar(player1);
             }
         }
-        if (player1.Salud > 0)
+        if (player1.Stats.Hp > 0)
         {
             PresentarGanadorPelea(player1);
         }else
@@ -77,11 +77,11 @@ class Game
     }
     private void PresentarGanadorJuego()
     {
-        Console.WriteLine($"******** El ganador  del juego es: {Player.Apodo.ToUpper()} {Player.Nombre.ToUpper()} ********");
+        Console.WriteLine($"******** El ganador  del juego es: {Player.Title.ToUpper()} {Player.Name.ToUpper()} ********");
         Console.WriteLine("FELICITACIONES");
     }
     private void PresentarGanadorPelea(Personaje ganador)
     {
-        Console.WriteLine($"******** El ganador  de la pelea es: {ganador.Apodo.ToUpper()} {ganador.Nombre.ToUpper()} ********");    
+        Console.WriteLine($"******** El ganador  de la pelea es: {ganador.Title.ToUpper()} {ganador.Name.ToUpper()} ********");    
     }
 }
