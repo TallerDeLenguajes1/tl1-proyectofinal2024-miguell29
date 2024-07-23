@@ -12,24 +12,39 @@ class Game
     public List<Personaje> Personajes { get => personajes; set => personajes = value; }
     public Personaje Player { get => player; set => player = value; }
     public Personaje Enemy { get => enemy; set => enemy = value; }
+    public List<string> Tags { get; set; }
 
     public Game(List<Personaje> personajes )
     {
         Personajes = personajes;
+
+        //*Se crea una lista con los tags de cada champion, que sirve para seleccionar un personaje
+        Tags = new List<string>();
+        foreach (var item in personajes)
+        {
+            foreach (var tag in item.Tags)
+            {
+                if (!Tags.Contains(tag))
+                {
+                    Tags.Add(tag);
+                }
+            }
+        }
+        Tags.Sort();
     }
 
     public void Play()
     {
         var random = new Random();
+        Console.Clear();
         while (personajes.Count != 0)
         {
             //selecciono un personaje al azar
             Thread.Sleep(500);
-            Console.Clear();
             var num = random.Next(personajes.Count);
             if (Player == null)
             {
-                Player = personajes[num];
+                player = SeleccionarPersonaje();
                 personajes.Remove(player);
                 continue;
             }else
@@ -51,12 +66,41 @@ class Game
                 {
                     personajes.RemoveAt(random.Next(personajes.Count));
                 }
+                Console.Clear();
                 Console.WriteLine($"Cantidad de enemigos restantes: {personajes.Count}");
                 continue;
             }
         }
         PresentarGanadorJuego();
         GameFile.GuardarGanador(Player);
+    }
+    private Personaje SeleccionarPersonaje()
+    {
+        Console.WriteLine("-------->    Seleccion de personajes");
+        Console.WriteLine("Elija el tipo:");
+        var indiceTag = 1;
+        foreach (var tag in Tags)
+        {
+            Console.WriteLine($"{indiceTag++} - {tag}");
+        }
+        indiceTag = int.Parse(Console.ReadLine());
+        var indicePersonaje = 1;
+        var listaPersonajePorTag = new List<Personaje>();
+        foreach (var personaje in personajes)
+        {
+            foreach (var tag in personaje.Tags)
+            {
+                if (tag == Tags[indiceTag - 1])
+                {
+                    Console.WriteLine($"{indicePersonaje++} - {personaje.Name}");
+                    listaPersonajePorTag.Add(personaje);
+                    break;
+                }
+            }
+        }
+        indicePersonaje = int.Parse(Console.ReadLine()) - 1;
+        return listaPersonajePorTag[indicePersonaje];
+
     }
     private void Figth(Personaje player1, Personaje player2)
     {
@@ -79,7 +123,6 @@ class Game
         {
             PresentarGanadorPelea(player2);
         }
-        Console.ReadKey();
     }
     private void PresentarGanadorJuego()
     {
