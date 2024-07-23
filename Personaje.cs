@@ -4,10 +4,9 @@ namespace ConsoleGame;
 public class Personaje
 {
     int nivel = 1;
-    int armadura;
-    int salud;
-    int edad;
-    
+
+   
+
     public string Id { get; set; }
     public string Name { get; set; } //*nombre
     public string Title { get; set; }//*Apodo
@@ -17,6 +16,19 @@ public class Personaje
     public List<string> Tags { get; set; }
     public string Partype { get; set; }
     public Stats Stats { get; set; }
+
+     public Personaje(string id, string name, string title, string blurb, Info info, Image image, List<string> tags, string partype, Stats stats)
+    {
+        Id = id;
+        Name = name;
+        Title = title;
+        Blurb = blurb;
+        Info = info;
+        Image = image;
+        Tags = tags;
+        Partype = partype;
+        Stats = stats;
+    }
 
     public void MostrarDatos()
     {
