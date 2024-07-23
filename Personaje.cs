@@ -18,6 +18,20 @@ public class Personaje
     int armadura;
     int salud;
     int edad;
+    
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public string Title { get; set; }
+    public string Blurb { get; set; }
+    public Info Info { get; set; }
+    public Image Image { get; set; }
+    public List<string> Tags { get; set; }
+    public string Partype { get; set; }
+    public Stats Stats { get; set; }
+
+
+
+
     public Personaje(string tipo, string nombre, string apodo, DateTime fechaNacimiento, int velocidad, int destreza, int fuerza, int nivel, int armadura, int salud)
     {
         this.tipo = tipo;
