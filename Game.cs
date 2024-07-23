@@ -1,3 +1,4 @@
+using System.Security;
 using GameComplements;
 
 namespace ConsoleGame;
@@ -53,12 +54,14 @@ class Game
                 personajes.Remove(enemy);
                 //*comienza la pelea
                 Figth(Player,enemy);
-                if (player.Stats.Hp > 0)
+                if (player.Salud > 0)
                 {
                     //TODO restaurar salud y mejorar nivel
                 }else
                 {
-                    player = enemy;
+                    GameOver(player);
+                    break;
+                    //player = enemy;
                     //TODO restaurar salud y mejorar nivel
                 }
                 //!Despues de cada ronda se eliminan la mitad de los personajes de la lista
@@ -70,9 +73,11 @@ class Game
                 Console.WriteLine($"Cantidad de enemigos restantes: {personajes.Count}");
                 continue;
             }
+        }if (player.Salud > 0)
+        {
+            PresentarGanadorJuego();
+            GameFile.GuardarGanador(Player);
         }
-        PresentarGanadorJuego();
-        GameFile.GuardarGanador(Player);
     }
     private Personaje SeleccionarPersonaje()
     {
@@ -105,18 +110,18 @@ class Game
     private void Figth(Personaje player1, Personaje player2)
     {
         Console.WriteLine($"Inicio de la pelea entre {player1.Name} y {player2.Name}");
-        while (player1.Stats.Hp > 0 && player2.Stats.Hp > 0)
+        while (player1.Salud > 0 && player2.Salud > 0)
         {
             //TODO menú de acciones
             Thread.Sleep(500); 
             player1.Atacar(player2);
-            if (player2.Stats.Hp > 0)
+            if (player2.Salud > 0)
             {
                 Thread.Sleep(500);
                 player2.Atacar(player1);
             }
         }
-        if (player1.Stats.Hp > 0)
+        if (player1.Salud > 0)
         {
             PresentarGanadorPelea(player1);
         }else
@@ -133,4 +138,11 @@ class Game
     {
         Console.WriteLine($"******** El ganador  de la pelea es: {ganador.Title.ToUpper()} {ganador.Name.ToUpper()} ********");    
     }
+    public void GameOver(Personaje player)
+    {
+        Console.Clear();
+        Console.SetCursorPosition(20,10);
+        Console.WriteLine($"******** El juego ha terminado ********");
+        Console.WriteLine($"******** {player.Title.ToUpper()} {player.Name.ToUpper()} ha perdido ********");
+    }   
 }
