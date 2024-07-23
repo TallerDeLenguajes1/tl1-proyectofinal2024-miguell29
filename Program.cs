@@ -2,16 +2,17 @@
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
-        var carga = new GameLoader();
-        foreach (var personaje in carga.Personajes)
+        var datos = new GameLoader();
+        await datos.CargarPersonajes();
+        foreach (var personaje in datos.Personajes)
         {
             personaje.MostrarDatos();
         }
         Thread.Sleep(2000); 
         Console.Clear();
-        var juego = new Game(carga.Personajes);
+        var juego = new Game(datos.Personajes);
         juego.Play();
         Console.ReadKey();
     }

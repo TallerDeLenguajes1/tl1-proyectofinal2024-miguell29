@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 class API
 {
-    public static async Task<List<Personaje>> GetPersonjes()
+    public static async Task<List<Personaje>> GetPersonajes()
     {
         using (HttpClient client = new HttpClient())
         {
