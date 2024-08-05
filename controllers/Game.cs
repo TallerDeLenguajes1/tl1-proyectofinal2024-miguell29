@@ -34,6 +34,8 @@ record Game(List<string> Tags)
 
     public void Play()
     {
+        var lista = new List<string>{" ","jugar","historial","salir"};
+        Menu.Show(lista,70,15);
         var random = new Random();
         Console.Clear();
         while (personajes.Count != 0)

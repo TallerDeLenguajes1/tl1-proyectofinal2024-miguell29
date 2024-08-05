@@ -4,6 +4,9 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
+
+        
+        Console.CursorVisible = false;
         var datos = new GameLoader();
         await datos.CargarPersonajes();
         Thread.Sleep(2000); 
