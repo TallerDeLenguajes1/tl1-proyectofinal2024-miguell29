@@ -3,8 +3,7 @@ using GameComplements;
 
 namespace ConsoleGame;
 
-
-class Game
+record Game(List<string> Tags)
 {
     private List<Personaje> personajes;
     private Personaje player;
@@ -13,14 +12,13 @@ class Game
     public List<Personaje> Personajes { get => personajes; set => personajes = value; }
     public Personaje Player { get => player; set => player = value; }
     public Personaje Enemy { get => enemy; set => enemy = value; }
-    public List<string> Tags { get; set; }
 
-    public Game(List<Personaje> personajes )
+    public Game(List<Personaje> personajes) : this(new List<string>())
     {
         Personajes = personajes;
 
         //*Se crea una lista con los tags de cada champion, que sirve para seleccionar un personaje
-        Tags = new List<string>();
+
         foreach (var item in personajes)
         {
             foreach (var tag in item.Tags)
@@ -48,17 +46,19 @@ class Game
                 player = SeleccionarPersonaje();
                 personajes.Remove(player);
                 continue;
-            }else
+            }
+            else
             {
                 enemy = personajes[num];
                 personajes.Remove(enemy);
                 //*comienza la pelea
-                Figth(Player,enemy);
+                Figth(Player, enemy);
                 if (player.Salud > 0)
                 {
                     //TODO restaurar salud y mejorar nivel
                     LevelUp(player);
-                }else
+                }
+                else
                 {
                     GameOver(player);
                     break;
@@ -66,7 +66,7 @@ class Game
                     //TODO restaurar salud y mejorar nivel
                 }
                 //!Despues de cada ronda se eliminan la mitad de los personajes de la lista
-                for (int i = 0; i < personajes.Count/2; i++)
+                for (int i = 0; i < personajes.Count / 2; i++)
                 {
                     personajes.RemoveAt(random.Next(personajes.Count));
                 }
@@ -74,7 +74,8 @@ class Game
                 Console.WriteLine($"Cantidad de enemigos restantes: {personajes.Count}");
                 continue;
             }
-        }if (player.Salud > 0)
+        }
+        if (player.Salud > 0)
         {
             PresentarGanadorJuego();
             GameFile.GuardarGanador(Player);
@@ -114,7 +115,7 @@ class Game
         while (player1.Salud > 0 && player2.Salud > 0)
         {
             //TODO menú de acciones
-            Thread.Sleep(500); 
+            Thread.Sleep(500);
             player1.Atacar(player2);
             if (player2.Salud > 0)
             {
@@ -125,7 +126,8 @@ class Game
         if (player1.Salud > 0)
         {
             PresentarGanadorPelea(player1);
-        }else
+        }
+        else
         {
             PresentarGanadorPelea(player2);
         }
@@ -137,12 +139,12 @@ class Game
     }
     private void PresentarGanadorPelea(Personaje ganador)
     {
-        Console.WriteLine($"******** El ganador  de la pelea es: {ganador.Title.ToUpper()} {ganador.Name.ToUpper()} ********");    
+        Console.WriteLine($"******** El ganador  de la pelea es: {ganador.Title.ToUpper()} {ganador.Name.ToUpper()} ********");
     }
     public void GameOver(Personaje player)
     {
         Console.Clear();
-        Console.SetCursorPosition(20,10);
+        Console.SetCursorPosition(20, 10);
         Console.WriteLine($"******** El juego ha terminado ********");
         Console.WriteLine($"******** {player.Title.ToUpper()} {player.Name.ToUpper()} ha perdido ********");
     }
@@ -157,6 +159,6 @@ class Game
         //*La salud del personaje no debe superar la salud max
         player.Salud = Math.Min(player.Salud + player.Stats.Hp * 0.3, player.Stats.Hp);
         player.Stats.AttackDamage += player.Nivel * player.Stats.AttackDamagePerLevel;
-        Console.ReadKey(); 
+        Console.ReadKey();
     }
 }

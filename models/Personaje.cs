@@ -63,7 +63,7 @@ public class Personaje
         enemy.Salud -= daño;
         var saludRestante = (enemy.Salud > 0) ? enemy.Salud : 0;
         Console.WriteLine($"{enemy.Name} recibe {daño:F2} de daño");
-        Console.WriteLine($"Salud restante: {saludRestante:F2}");
+        Console.WriteLine($"Salud restante: {saludRestante:F2}");//F2 muestra el resultado con dos decimales
     }
 
 }
