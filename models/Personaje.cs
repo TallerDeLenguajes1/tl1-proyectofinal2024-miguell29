@@ -8,6 +8,7 @@ public class Personaje
     //*Variables que me sirven para el desarrollo del juego
     int nivel = 1;
     double salud = 0;
+    double ataque = 0;
 
 
 
@@ -22,6 +23,7 @@ public class Personaje
     public Stats Stats { get; set; }
     public int Nivel { get => nivel; set => nivel = value; }
     public double Salud { get => salud; set => salud = value; }
+    public double Ataque { get => ataque; set => ataque = value; }
 
     public Personaje(string id, string name, string title, string blurb, Info info, Image image, List<string> tags, string partype, Stats stats)
     {
@@ -35,6 +37,7 @@ public class Personaje
         Partype = partype;
         Stats = stats;
         Salud = stats.Hp;
+        Ataque = stats.AttackDamage;
     }
 
     public void MostrarDatos()
@@ -50,7 +53,7 @@ public class Personaje
     }
     public void Atacar(Personaje enemy)
     {
-        var ataque = Stats.AttackDamage;
+        var ataque = Ataque;
         var efectividadDeAtaqueMin = Math.Min((Nivel-1)*10, 100);
         var efectividadDeAtaque = new Random().Next(efectividadDeAtaqueMin, 101) / 100.0;
         var efectividadDeDeefensaMin = Math.Min((enemy.Nivel-1)*10, 100);

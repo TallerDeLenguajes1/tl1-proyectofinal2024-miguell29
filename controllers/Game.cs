@@ -5,7 +5,8 @@ namespace ConsoleGame;
 public class Game
 {
     private List<Personaje> personajes = new List<Personaje>();
-    
+    private List<Personaje> personajesEnJuego;
+
     private Personaje player;
     private Personaje enemy;
     private List<string> tags = new List<string>();
@@ -14,13 +15,13 @@ public class Game
     public Personaje Enemy { get => enemy; set => enemy = value; }
     public List<string> Tags { get => tags; set => tags = value; }
 
-    public Game(List<Personaje> personajes)
+    public Game(List<Personaje> Listapersonajes)
     {
-        Personajes = personajes;
+        personajes = Listapersonajes;
 
         //*Se crea una lista con los tags de cada champion, que sirve para seleccionar un personaje
 
-        foreach (var item in personajes)
+        foreach (var item in Listapersonajes)
         {
             foreach (var tag in item.Tags)
             {
@@ -63,21 +64,28 @@ public class Game
 
     private void NuevoJuego()
     {
-         var random = new Random();
         Console.Clear();
-        while (personajes.Count != 0)
+
+        personajesEnJuego = new List<Personaje>(personajes); // copia la lista y no pasa por referncia
+        player = null;
+        enemy = null;
+        var random = new Random();
+        while (personajesEnJuego.Count != 0)
         {
-            var num = random.Next(personajes.Count);
-            if (Player == null)
+            var num = random.Next(personajesEnJuego.Count);
+            if (player == null)
             {
                 player = SeleccionarPersonaje();
-                personajes.Remove(player);
+                personajesEnJuego.Remove(player);
+                RestaurarStats(player);
                 continue;
             }
             else
             {
-                enemy = personajes[num];
-                personajes.Remove(enemy);
+                enemy = personajesEnJuego[num];
+                personajesEnJuego.Remove(enemy);
+                RestaurarStats(enemy);
+
                 //*comienza la pelea
                 Figth(Player, enemy);
                 if (player.Salud > 0)
@@ -93,12 +101,12 @@ public class Game
                     //TODO restaurar salud y mejorar nivel
                 }
                 //!Despues de cada ronda se eliminan la mitad de los personajes de la lista
-                for (int i = 0; i < personajes.Count / 2; i++)
+                for (int i = 0; i < personajesEnJuego.Count / 2; i++)
                 {
-                    personajes.RemoveAt(random.Next(personajes.Count));
+                    personajesEnJuego.RemoveAt(random.Next(personajesEnJuego.Count));
                 }
                 Console.Clear();
-                Console.WriteLine($"Cantidad de enemigos restantes: {personajes.Count}");
+                Console.WriteLine($"Cantidad de enemigos restantes: {personajesEnJuego.Count}");
                 continue;
             }
         }
@@ -121,7 +129,7 @@ public class Game
         indiceTag = int.Parse(Console.ReadLine());
         var indicePersonaje = 1;
         var listaPersonajePorTag = new List<Personaje>();
-        foreach (var personaje in personajes)
+        foreach (var personaje in personajesEnJuego)
         {
             foreach (var tag in personaje.Tags)
             {
@@ -187,7 +195,14 @@ public class Game
         player.Nivel++;
         //*La salud del personaje no debe superar la salud max
         player.Salud = Math.Min(player.Salud + player.Stats.Hp * 0.3, player.Stats.Hp);
-        player.Stats.AttackDamage += player.Nivel * player.Stats.AttackDamagePerLevel;
+        player.Ataque += player.Nivel * player.Stats.AttackDamagePerLevel;
         Console.ReadKey();
+    }
+    public void RestaurarStats(Personaje player)
+    {
+        player.Salud = player.Stats.Hp;
+        player.Ataque = player.Stats.AttackDamage;
+        player.Nivel = 1;
+
     }
 }
