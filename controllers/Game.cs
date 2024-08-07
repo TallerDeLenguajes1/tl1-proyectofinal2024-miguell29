@@ -171,9 +171,7 @@ public class Game
     public void GameOver(Personaje player)
     {
         Console.Clear();
-        Console.SetCursorPosition(20, 10);
-        Console.WriteLine($"******** El juego ha terminado ********");
-        Console.WriteLine($"******** {player.Title.ToUpper()} {player.Name.ToUpper()} ha perdido ********");
+        Animacion.GameOver();
     }
     public void LevelUp(Personaje player)
     {

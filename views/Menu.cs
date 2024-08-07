@@ -7,7 +7,7 @@ public class Menu
     {
         int opcion = 1;
         bool selected = false;
-        while (!selected)
+        while (!selected)        
         {
             int positionY = y;
             Console.Clear();
