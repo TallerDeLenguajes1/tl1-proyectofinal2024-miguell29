@@ -1,6 +1,4 @@
 //* Esta clase se encarga de preparar todo antes de que el juego inicie
-
-using System.ComponentModel;
 using GameComplements;
 
 namespace ConsoleGame;

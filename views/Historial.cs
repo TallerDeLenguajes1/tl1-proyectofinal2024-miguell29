@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using ConsoleGame;
 
 class Historial
@@ -20,7 +19,7 @@ class Historial
         }
         auxY++;
         auxY++;
-        Inicio.PresioneUnaTecla(x,auxY++,"Presione una tecla para volver al menu...");
+        Animacion.PresioneUnaTecla(x,auxY++,"Presione una tecla para volver al menu...");
         
     }
 }

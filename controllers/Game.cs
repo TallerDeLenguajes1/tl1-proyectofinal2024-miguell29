@@ -1,4 +1,3 @@
-using System.Security;
 using GameComplements;
 
 namespace ConsoleGame;
@@ -35,7 +34,7 @@ public class Game
 
     public void Play()
     {
-        Inicio.Start();
+        Animacion.Inicio();
         var salir = false;
         while (!salir)
         {

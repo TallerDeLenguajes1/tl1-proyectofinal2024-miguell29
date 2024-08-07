@@ -1,20 +1,8 @@
 
-using System.Dynamic;
-using System.Runtime.InteropServices;
-
-class Inicio
+class Animacion
 {
-    public static void Start(){
+    public static void Inicio(){
         Console.CursorVisible = false;
-        Animacion();
-    }
-
-    static void Animacion()
-    {
-        int x = Console.WindowWidth / 2 - 20;
-        int y = 5;
-        int auxY = y;
-
         var titulo = @"__________         __    __  .__            
 \______   \_____ _/  |__/  |_|  |   ____    
  |    |  _/\__  \\   __\   __\  | _/ __ \   
@@ -28,6 +16,15 @@ __________                     .__
  |____|_  /\____// ____|(____  /____/\___  >
         \/       \/          \/          \/ 
 ";
+        Animar(titulo);
+    }
+
+    static void Animar(string titulo)
+    {
+        int x = Console.WindowWidth / 2 - 20;
+        int y = 5;
+        int auxY = y;
+
         //*`StringSplitOptions.None`:** Este argumento especifica que no se deben eliminar las entradas vacías del array resultante.
         string[] lineas = titulo.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
         Console.ForegroundColor = ConsoleColor.Red;
