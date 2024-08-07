@@ -42,7 +42,25 @@ __________                     .__
 ░ ░ ░ ▒       ░░     ░     ░░   ░   
     ░ ░        ░     ░  ░   ░       
               ░                     
-";
+
+Tu campeón ha caído en batalla.
+La arena es un lugar despiadado, y esta vez la suerte no te acompañó.
+
+¡Sigue practicando y vuelve más fuerte para la próxima vez!";
+        Animar(titulo);
+    }
+
+    public static void Victory()
+    {
+        var titulo = @"
+
+╦  ╦┬┌─┐┌┬┐┌─┐┬─┐┬ ┬┬
+╚╗╔╝││   │ │ │├┬┘└┬┘│
+ ╚╝ ┴└─┘ ┴ └─┘┴└─ ┴ o
+
+¡Tu campeón ha prevalecido en la batalla!
+Dominaste la arena y te alzaste como el último campeón en pie.
+¡Felicidades por tu habilidad y estrategia!";
         Animar(titulo);
     }
 

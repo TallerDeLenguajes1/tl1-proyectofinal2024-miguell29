@@ -5,6 +5,7 @@ namespace ConsoleGame;
 public class Game
 {
     private List<Personaje> personajes = new List<Personaje>();
+    
     private Personaje player;
     private Personaje enemy;
     private List<string> tags = new List<string>();
@@ -163,6 +164,9 @@ public class Game
     {
         Console.WriteLine($"******** El ganador  del juego es: {Player.Title.ToUpper()} {Player.Name.ToUpper()} ********");
         Console.WriteLine("FELICITACIONES");
+        Thread.Sleep(2000);
+        Console.Clear();
+        Animacion.Victory();
     }
     private void PresentarGanadorPelea(Personaje ganador)
     {
