@@ -8,6 +8,5 @@ internal class Program
         await datos.CargarPersonajes();
         var juego = new Game(datos.Personajes);
         juego.Play();
-        Console.ReadKey();
     }
 }

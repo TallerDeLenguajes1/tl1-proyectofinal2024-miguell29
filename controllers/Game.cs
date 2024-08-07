@@ -3,17 +3,18 @@ using GameComplements;
 
 namespace ConsoleGame;
 
-record Game(List<string> Tags)
+public class Game
 {
-    private List<Personaje> personajes;
+    private List<Personaje> personajes = new List<Personaje>();
     private Personaje player;
     private Personaje enemy;
-
+    private List<string> tags = new List<string>();
     public List<Personaje> Personajes { get => personajes; set => personajes = value; }
     public Personaje Player { get => player; set => player = value; }
     public Personaje Enemy { get => enemy; set => enemy = value; }
+    public List<string> Tags { get => tags; set => tags = value; }
 
-    public Game(List<Personaje> personajes) : this(new List<string>())
+    public Game(List<Personaje> personajes)
     {
         Personajes = personajes;
 
@@ -38,13 +39,13 @@ record Game(List<string> Tags)
         var salir = false;
         while (!salir)
         {
-            var opcionesMenuPrincipal = new List<string>{" ","Jugar","Historial","Salir"};
+            var opcionesMenuPrincipal = new List<string>{" ","Nuevo Juego","Historial","Salir"};
             int opcion = Menu.Show(opcionesMenuPrincipal,Console.WindowWidth/2,10);
             
             switch (opcion)
             {
                 case 1:
-                    
+                    NuevoJuego();
                 break;
                 case 2:
                     Historial.Show(GameFile.LeerGanadores("HistorialGanadores.json"));
@@ -55,16 +56,14 @@ record Game(List<string> Tags)
                     Console.SetCursorPosition(Console.WindowWidth/2,20);
                     Console.WriteLine("Saliendo...");
                     Thread.Sleep(2000);
-                break;
-
-                default:
-
-                break;  
+                break; 
             }
         }
-        
-        
-        var random = new Random();
+    }
+
+    private void NuevoJuego()
+    {
+         var random = new Random();
         Console.Clear();
         while (personajes.Count != 0)
         {
@@ -109,7 +108,7 @@ record Game(List<string> Tags)
             GameFile.GuardarGanador(Player);
         }
     }
-   
+
     private Personaje SeleccionarPersonaje()
     {
         Console.WriteLine("-------->    Seleccion de personajes");
