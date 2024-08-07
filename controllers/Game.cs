@@ -51,7 +51,10 @@ record Game(List<string> Tags)
                 break;
 
                 case 3:
-
+                    salir = true;
+                    Console.SetCursorPosition(Console.WindowWidth/2,20);
+                    Console.WriteLine("Saliendo...");
+                    Thread.Sleep(2000);
                 break;
 
                 default:
