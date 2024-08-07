@@ -35,14 +35,36 @@ record Game(List<string> Tags)
     public void Play()
     {
         Inicio.Start();
-        var lista = new List<string>{" ","jugar","historial","salir"};
-        Menu.Show(lista);
+        var salir = false;
+        while (!salir)
+        {
+            var opcionesMenuPrincipal = new List<string>{" ","Jugar","Historial","Salir"};
+            int opcion = Menu.Show(opcionesMenuPrincipal,Console.WindowWidth/2,10);
+            
+            switch (opcion)
+            {
+                case 1:
+                    
+                break;
+                case 2:
+                    Historial.Show(GameFile.LeerGanadores("HistorialGanadores.json"));
+                break;
+
+                case 3:
+
+                break;
+
+                default:
+
+                break;  
+            }
+        }
+        
+        
         var random = new Random();
         Console.Clear();
         while (personajes.Count != 0)
         {
-            //selecciono un personaje al azar
-            Thread.Sleep(500);
             var num = random.Next(personajes.Count);
             if (Player == null)
             {
@@ -84,6 +106,7 @@ record Game(List<string> Tags)
             GameFile.GuardarGanador(Player);
         }
     }
+   
     private Personaje SeleccionarPersonaje()
     {
         Console.WriteLine("-------->    Seleccion de personajes");
