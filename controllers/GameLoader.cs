@@ -15,15 +15,20 @@ class GameLoader
             personajes = GameFile.LeerPersonajes("Personajes.json");
         }else
         {   
-            //*Usando la clase Factory
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    personajes.Add(Factory.CreatePersonaje());
-            //}
-            
-            //*Usando la clase API
+            //Usando la clase API
             personajes = await API.GetPersonajes();
-            GameFile.GuardarPersonajes(personajes);
+            if (personajes != null)
+            {
+                GameFile.GuardarPersonajes(personajes);
+            }else
+            {
+                //Usando la clase Factory
+                for (int i = 0; i < 10; i++)
+                {
+                    personajes.Add(Factory.CreatePersonaje());
+                }
+                
+            }
         }
     }
 
