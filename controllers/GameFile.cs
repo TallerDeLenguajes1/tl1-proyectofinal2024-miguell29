@@ -47,14 +47,20 @@ public static class GameFile
     public static List<Personaje> LeerGanadores(string fileName)
     {
         //var carpeta = Path.Combine(Directory.GetCurrentDirectory(),"Files");
-        var listaGanadoresJson = File.ReadAllLines(Path.Combine(carpeta,fileName));//lista de strings con los ganadores en formato json
-        var listaGanadores = new List<Personaje>();
-        foreach (var ganadorJson in listaGanadoresJson)
+        if (Existe(Path.Combine(carpeta,fileName)))
         {
-            var ganador = JsonSerializer.Deserialize<Personaje>(ganadorJson);
-            listaGanadores.Add(ganador);
+            var listaGanadoresJson = File.ReadAllLines(Path.Combine(carpeta,fileName));//lista de strings con los ganadores en formato json
+            var listaGanadores = new List<Personaje>();
+            foreach (var ganadorJson in listaGanadoresJson)
+            {
+                var ganador = JsonSerializer.Deserialize<Personaje>(ganadorJson);
+                listaGanadores.Add(ganador);
+            }
+            return listaGanadores;
+        }else
+        {
+            return null;
         }
-        return listaGanadores;
     }
     public static bool Existe(string fileName)
     {

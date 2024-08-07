@@ -12,14 +12,21 @@ class Historial
         Console.Write("Historial de Ganadores");
         auxY++;
         auxY++;
-        foreach (Personaje personaje in lista)
+        if (lista != null)
         {
-            Console.SetCursorPosition(x-20,auxY++);
-            Console.Write($"{personaje.Name} - {personaje.Title} - Salud: {personaje.Stats.Hp} - Nivel: {personaje.Nivel}");
+            foreach (Personaje personaje in lista)
+            {
+                Console.SetCursorPosition(x-20,auxY++);
+                Console.Write($"{personaje.Name} - {personaje.Title} - Salud: {personaje.Stats.Hp} - Nivel: {personaje.Nivel}");
+            }
+        }else
+        {
+            Console.SetCursorPosition(x,auxY++);
+            Console.Write("Historial Vacio");
         }
-        auxY++;
-        auxY++;
-        Animacion.PresioneUnaTecla(x,auxY++,"Presione una tecla para volver al menu...");
+            auxY++;
+            auxY++;
+            Animacion.PresioneUnaTecla(x,auxY++,"Presione una tecla para volver al menu...");
         
     }
 }
