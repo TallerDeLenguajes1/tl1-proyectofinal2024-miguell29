@@ -102,5 +102,6 @@ Dominaste la arena y te alzaste como el último campeón en pie.
             mostrarTexto = !mostrarTexto;  // Invertir el estado para la próxima iteración
             Thread.Sleep(400);
         }
+            Console.Clear();
     }
 }

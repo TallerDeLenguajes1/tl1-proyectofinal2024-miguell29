@@ -25,9 +25,9 @@ public class Game
         {
             foreach (var tag in item.Tags)
             {
-                if (!Tags.Contains(tag))
+                if (!Tags.Contains(tag.ToUpper().Trim()))
                 {
-                    Tags.Add(tag);
+                    Tags.Add(tag.ToUpper().Trim());
                 }
             }
         }
@@ -76,9 +76,15 @@ public class Game
             if (player == null)
             {
                 player = SeleccionarPersonaje();
-                personajesEnJuego.Remove(player);
-                RestaurarStats(player);
-                continue;
+                if (player != null)
+                {
+                    personajesEnJuego.Remove(player);
+                    RestaurarStats(player);
+                    continue;                    
+                }else
+                {
+                    break;
+                }
             }
             else
             {
@@ -110,10 +116,13 @@ public class Game
                 continue;
             }
         }
-        if (player.Salud > 0)
+        if (player != null)
         {
-            PresentarGanadorJuego();
-            GameFile.GuardarGanador(Player);
+            if (player.Salud > 0)
+            {
+                PresentarGanadorJuego();
+                GameFile.GuardarGanador(Player);
+            }
         }
     }
 
@@ -121,29 +130,59 @@ public class Game
     {
         Console.WriteLine("-------->    Seleccion de personajes");
         Console.WriteLine("Elija el tipo:");
-        var indiceTag = 1;
+
+        Personaje personajeSeleccionado = null;
+        if (Tags[0] != " ") Tags.Insert(0," ");
+        var selected = false;
+
+        while (!selected)
+        {
+            var indiceTag = Menu.Show(Tags,2,5);
+            if (indiceTag == -1) {
+                Console.Clear();
+                break;
+            }
+            var listaPersonajePorTag = new List<string>();
+            foreach (var personaje in personajesEnJuego)
+            {
+                foreach (var tag in personaje.Tags)
+                {
+                    if (tag.ToUpper().Trim() == Tags[indiceTag])
+                    {
+                        listaPersonajePorTag.Add(personaje.Name);
+                        break;
+                    }
+                }
+            }
+            listaPersonajePorTag.Insert(0," ");
+            var indicePersonaje = Menu.Show(listaPersonajePorTag,22,5);
+            if (indicePersonaje != -1)
+            {
+                foreach (var item in personajesEnJuego)
+                {
+                    if (item.Name == listaPersonajePorTag[indicePersonaje])
+                    {
+                        personajeSeleccionado = item;
+                        selected = true;
+                        Console.Clear();
+                        break;
+                    }
+                }                
+            }else
+            {
+                personajeSeleccionado = null;
+            }
+        }        
+        return personajeSeleccionado;
+        /*
         foreach (var tag in Tags)
         {
             Console.WriteLine($"{indiceTag++} - {tag}");
         }
         indiceTag = int.Parse(Console.ReadLine());
-        var indicePersonaje = 1;
-        var listaPersonajePorTag = new List<Personaje>();
-        foreach (var personaje in personajesEnJuego)
-        {
-            foreach (var tag in personaje.Tags)
-            {
-                if (tag == Tags[indiceTag - 1])
-                {
-                    Console.WriteLine($"{indicePersonaje++} - {personaje.Name}");
-                    listaPersonajePorTag.Add(personaje);
-                    break;
-                }
-            }
-        }
         indicePersonaje = int.Parse(Console.ReadLine()) - 1;
         return listaPersonajePorTag[indicePersonaje];
-
+*/
     }
     private void Figth(Personaje player1, Personaje player2)
     {
