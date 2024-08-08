@@ -14,6 +14,7 @@ public class Game
     public Personaje Player { get => player; set => player = value; }
     public Personaje Enemy { get => enemy; set => enemy = value; }
     public List<string> Tags { get => tags; set => tags = value; }
+    public List<Personaje> PersonajesEnJuego { get => personajesEnJuego; set => personajesEnJuego = value; }
 
     public Game(List<Personaje> Listapersonajes)
     {
@@ -66,19 +67,19 @@ public class Game
     {
         Console.Clear();
 
-        personajesEnJuego = new List<Personaje>(personajes); // copia la lista y no pasa por referncia
+        PersonajesEnJuego = new List<Personaje>(personajes); // copia la lista y no pasa por referncia
         player = null;
         enemy = null;
         var random = new Random();
-        while (personajesEnJuego.Count != 0)
+        while (PersonajesEnJuego.Count != 0)
         {
-            var num = random.Next(personajesEnJuego.Count);
+            var num = random.Next(PersonajesEnJuego.Count);
             if (player == null)
             {
                 player = SeleccionarPersonaje();
                 if (player != null)
                 {
-                    personajesEnJuego.Remove(player);
+                    PersonajesEnJuego.Remove(player);
                     RestaurarStats(player);
                     continue;                    
                 }else
@@ -88,8 +89,8 @@ public class Game
             }
             else
             {
-                enemy = personajesEnJuego[num];
-                personajesEnJuego.Remove(enemy);
+                enemy = PersonajesEnJuego[num];
+                PersonajesEnJuego.Remove(enemy);
                 RestaurarStats(enemy);
 
                 //*comienza la pelea
@@ -106,15 +107,14 @@ public class Game
                     break;
                 }
                 //!Despues de cada ronda se eliminan la mitad de los personajes de la lista
-                for (int i = 0; i < personajesEnJuego.Count / 2; i++)
+                for (int i = 0; i < PersonajesEnJuego.Count / 2; i++)
                 {
-                    personajesEnJuego.RemoveAt(random.Next(personajesEnJuego.Count));
+                    PersonajesEnJuego.RemoveAt(random.Next(PersonajesEnJuego.Count));
                 }
-                Console.Clear();
-                Console.WriteLine($"Cantidad de enemigos restantes: {personajesEnJuego.Count}");
                 continue;
             }
         }
+        //Esta seccion controla si salio del menu sin elejir un personaje o gano la partida
         if (player != null)
         {
             if (player.Salud > 0)
@@ -142,7 +142,7 @@ public class Game
                 break;
             }
             var listaPersonajePorTag = new List<string>();
-            foreach (var personaje in personajesEnJuego)
+            foreach (var personaje in PersonajesEnJuego)
             {
                 foreach (var tag in personaje.Tags)
                 {
@@ -157,7 +157,7 @@ public class Game
             var indicePersonaje = Menu.Show(listaPersonajePorTag,22,5);
             if (indicePersonaje != -1)
             {
-                foreach (var item in personajesEnJuego)
+                foreach (var item in PersonajesEnJuego)
                 {
                     if (item.Name == listaPersonajePorTag[indicePersonaje])
                     {
@@ -176,7 +176,7 @@ public class Game
     }
     private void Figth(Personaje player1, Personaje player2)
     {
-        Animacion.Versus(player1,player2);
+        Animacion.Versus(player1,player2,personajesEnJuego.Count);
         double danio;//daño
 
         while (player1.Salud > 0 && player2.Salud > 0)

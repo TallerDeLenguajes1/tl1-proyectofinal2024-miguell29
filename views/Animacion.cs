@@ -68,7 +68,7 @@ Dominaste la arena y te alzaste como el último campeón en pie.
         Animar(titulo);
     }
 
-    public static void Versus(Personaje player1, Personaje player2)
+    public static void Versus(Personaje player1, Personaje player2,int enemigos)
     {
         Console.Clear();
         var vs = @"
@@ -78,6 +78,8 @@ Dominaste la arena y te alzaste como el último campeón en pie.
 ";
         DatosDelPersonaje(player1, 2,5);
         DatosDelPersonaje(player2,80,5);
+        Console.SetCursorPosition(5,28);
+        Console.WriteLine($"Cantidad de enemigos restantes: {enemigos}");
         Animar(vs);
 
     }
@@ -203,9 +205,9 @@ Dominaste la arena y te alzaste como el último campeón en pie.
             Console.Write(personaje.Blurb[i]);
         }
         Console.SetCursorPosition(X, y++);
-        Console.Write($"Salud: {personaje.Salud}");
+        Console.Write($"Salud: {personaje.Salud:F2}");
         Console.SetCursorPosition(X, y++);
-        Console.Write($"Ataque: {personaje.Ataque}");
+        Console.Write($"Ataque: {personaje.Ataque:F2}");
         Console.SetCursorPosition(X, y++);
         Console.Write("Tags: ");
         foreach (var item in personaje.Tags)
