@@ -174,19 +174,12 @@ public class Game
             }
         }        
         return personajeSeleccionado;
-        /*
-        foreach (var tag in Tags)
-        {
-            Console.WriteLine($"{indiceTag++} - {tag}");
-        }
-        indiceTag = int.Parse(Console.ReadLine());
-        indicePersonaje = int.Parse(Console.ReadLine()) - 1;
-        return listaPersonajePorTag[indicePersonaje];
-*/
     }
     private void Figth(Personaje player1, Personaje player2)
     {
+        Animacion.Versus(player1,player2);
         Console.WriteLine($"Inicio de la pelea entre {player1.Name} y {player2.Name}");
+
         while (player1.Salud > 0 && player2.Salud > 0)
         {
             //TODO menú de acciones

@@ -1,4 +1,7 @@
 
+using System.Security.Cryptography.X509Certificates;
+using ConsoleGame;
+
 class Animacion
 {
     public static void Inicio(){
@@ -64,6 +67,20 @@ Dominaste la arena y te alzaste como el último campeón en pie.
         Animar(titulo);
     }
 
+    public static void Versus(Personaje player1, Personaje player2)
+    {
+        Console.Clear();
+        var vs = @"
+╦  ╦╔═╗
+╚╗╔╝╚═╗
+ ╚╝ ╚═╝
+";
+        DatosDelPersonaje(player1, 2,5);
+        DatosDelPersonaje(player2,80,5);
+        Animar(vs);
+
+    }
+
     static void Animar(string titulo)
     {
         int x = Console.WindowWidth / 2 - 20;
@@ -89,6 +106,7 @@ Dominaste la arena y te alzaste como el último campeón en pie.
 
         while (!Console.KeyAvailable)  // Mientras no se presione una tecla
         {
+            int auxX= x;
             if (mostrarTexto)
             {
                 Console.SetCursorPosition(x, auxY + 2);
@@ -96,12 +114,48 @@ Dominaste la arena y te alzaste como el último campeón en pie.
             }
             else
             {
-                //* se escribe una línea vacía (utilizando \r para volver al principio de la línea y espacios para sobrescribir el texto anterior)
-                Console.Write("\r" + new string(' ', Console.WindowWidth - 1) + "\r");
+                Console.SetCursorPosition(x, auxY + 2);
+                for (int i = 0; i < texto.Length; i++)
+                {
+                    Console.SetCursorPosition(auxX++,auxY + 2);
+                    Console.Write(" ");
+                }
             }
             mostrarTexto = !mostrarTexto;  // Invertir el estado para la próxima iteración
             Thread.Sleep(400);
-        }
+        } 
+            Console.ReadKey(true);
             Console.Clear();
+    }
+    public static void DatosDelPersonaje(Personaje personaje,int X,int y)
+    {
+        Console.SetCursorPosition(X, y++);
+        Console.Write("Nombre: " + personaje.Name.ToUpper());
+        Console.SetCursorPosition(X, y++);
+        Console.Write($"Title: {personaje.Title}");
+        Console.SetCursorPosition(X, y++);
+        Console.Write($"Historia :");
+        Console.SetCursorPosition(X, y++);
+        for (int i = 0; i < personaje.Blurb.Length; i++)
+        {
+            if (i % 30 == 0 && i != 0)
+            {
+                Console.SetCursorPosition(X, y++);
+            }
+            Console.Write(personaje.Blurb[i]);
+        }
+        Console.SetCursorPosition(X, y++);
+        Console.Write($"Salud: {personaje.Salud}");
+        Console.SetCursorPosition(X, y++);
+        Console.Write($"Ataque: {personaje.Ataque}");
+        Console.SetCursorPosition(X, y++);
+        Console.Write("Tags: ");
+        foreach (var item in personaje.Tags)
+        {
+            Console.Write(item + " | ");
+        }
+        Console.SetCursorPosition(X, y++);
+        Console.SetCursorPosition(X, y++);
+        Console.Write($"Nivel: {personaje.Nivel}");
     }
 }
