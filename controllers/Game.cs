@@ -96,15 +96,14 @@ public class Game
                 Figth(Player, enemy);
                 if (player.Salud > 0)
                 {
-                    //TODO restaurar salud y mejorar nivel
+                    //* restaurar salud y mejorar nivel
                     LevelUp(player);
                 }
                 else
                 {
-                    GameOver(player);
+                    Console.Clear();
+                    Animacion.GameOver();
                     break;
-                    //player = enemy;
-                    //TODO restaurar salud y mejorar nivel
                 }
                 //!Despues de cada ronda se eliminan la mitad de los personajes de la lista
                 for (int i = 0; i < personajesEnJuego.Count / 2; i++)
@@ -178,17 +177,20 @@ public class Game
     private void Figth(Personaje player1, Personaje player2)
     {
         Animacion.Versus(player1,player2);
-        Console.WriteLine($"Inicio de la pelea entre {player1.Name} y {player2.Name}");
+        double danio;//daño
 
         while (player1.Salud > 0 && player2.Salud > 0)
         {
             //TODO menú de acciones
             Thread.Sleep(500);
-            player1.Atacar(player2);
+            danio = Atacar(player1,player2);
+            Animacion.Atacar(player1,player2,1,danio);
+
             if (player2.Salud > 0)
             {
                 Thread.Sleep(500);
-                player2.Atacar(player1);
+                danio = Atacar(player2,player1);
+                Animacion.Atacar(player2,player1,-1,danio);
             }
         }
         if (player1.Salud > 0)
@@ -211,11 +213,7 @@ public class Game
     private void PresentarGanadorPelea(Personaje ganador)
     {
         Console.WriteLine($"******** El ganador  de la pelea es: {ganador.Title.ToUpper()} {ganador.Name.ToUpper()} ********");
-    }
-    public void GameOver(Personaje player)
-    {
-        Console.Clear();
-        Animacion.GameOver();
+        Console.ReadKey();
     }
     public void LevelUp(Personaje player)
     {
@@ -236,5 +234,22 @@ public class Game
         player.Ataque = player.Stats.AttackDamage;
         player.Nivel = 1;
 
+    }
+    double Atacar(Personaje player,Personaje enemy)
+    {
+        var ataque = player.Ataque;
+       
+        var efectividadDeAtaqueMin = Math.Min((player.Nivel-1)*10, 100);
+        var efectividadDeAtaque = new Random().Next(efectividadDeAtaqueMin, 101) / 100.0;
+        var efectividadDeDeefensaMin = Math.Min((enemy.Nivel-1)*10, 100);
+        var efectividadDeDefensa = new Random().Next(efectividadDeDeefensaMin, 101) / 200.0;;
+       
+        var defensa = enemy.Stats.Armor + (enemy.Stats.MoveSpeed * 0.1);// defensa = armadura + velocidad * 0.1
+        var danio = (ataque * efectividadDeAtaque) - (defensa * efectividadDeDefensa);
+
+        // Asegurarse de que el daño no sea negativo
+        danio = Math.Max(danio, 0);
+        enemy.Salud -= danio;
+        return danio;
     }
 }

@@ -6,6 +6,7 @@ class Animacion
 {
     public static void Inicio(){
         Console.CursorVisible = false;
+        Console.ForegroundColor=ConsoleColor.Red;
         var titulo = @"__________         __    __  .__            
 \______   \_____ _/  |__/  |_|  |   ____    
  |    |  _/\__  \\   __\   __\  | _/ __ \   
@@ -81,6 +82,64 @@ Dominaste la arena y te alzaste como el último campeón en pie.
 
     }
 
+    public static void Atacar(Personaje player1, Personaje player2,int sentido,double danio)
+    {
+        Console.Clear();
+        //imprime los nombres de los peleadores
+        var x =5;
+        var y = 5;
+
+        string flecha;
+        if (sentido > 0)
+        {
+            flecha =@"
+            
+          \ 
+ ___  ___  \
+           /
+          / 
+            
+";
+        }else
+        {
+            flecha =@"
+            
+ /          
+/  ___  ___ 
+\           
+ \          
+            
+";          
+            var playerAux = player1;
+            player1 = player2;
+            player2 = playerAux;
+        }
+        Console.SetCursorPosition(x,y);
+        Console.Write(player1.Name);
+        Console.SetCursorPosition(x+25,y);
+        Console.Write("VS");
+        Console.SetCursorPosition(x+42,y);
+        Console.Write(player2.Name);
+        //imprime la salud de los peleadores
+        y++;
+        y++;
+        Console.SetCursorPosition(x,y);
+        Console.Write($"{player1.Salud:F2}");
+        Console.SetCursorPosition(x+42,y);
+        Console.Write($"{player2.Salud:F2}");
+        y += 5;
+        string[] lineas = flecha.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+        foreach (var item in lineas)
+        {
+            Console.SetCursorPosition(x+20, y++);
+            Console.WriteLine(item);
+        }
+        y++;
+        Console.SetCursorPosition(x+25, y++);
+        Console.Write($"- {danio:F2}");
+        Console.SetCursorPosition(x,y);
+    }
+
     static void Animar(string titulo)
     {
         int x = Console.WindowWidth / 2 - 20;
@@ -89,7 +148,6 @@ Dominaste la arena y te alzaste como el último campeón en pie.
 
         //*`StringSplitOptions.None`:** Este argumento especifica que no se deben eliminar las entradas vacías del array resultante.
         string[] lineas = titulo.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-        Console.ForegroundColor = ConsoleColor.Red;
         foreach (var item in lineas)
         {
             Console.SetCursorPosition(x, auxY++);

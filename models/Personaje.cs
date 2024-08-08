@@ -40,33 +40,7 @@ public class Personaje
         Ataque = stats.AttackDamage;
     }
 
-    public void MostrarDatos()
-    {
-        Console.WriteLine("----------> Datos del personaje:");
-        Console.WriteLine($"nombre: {Name}");
-        Console.WriteLine($"Title: {Title}");
-        Console.WriteLine($"Daño de Ataque: {Stats.AttackDamage}");
-        Console.WriteLine($"velocidad: {Stats.MoveSpeed}");
-        Console.WriteLine($"nivel: {Nivel}");
-        Console.WriteLine($"armadura: {Stats.Armor}");
-        Console.WriteLine($"salud: {Stats.Hp}\n");
-    }
-    public void Atacar(Personaje enemy)
-    {
-        var ataque = Ataque;
-        var efectividadDeAtaqueMin = Math.Min((Nivel-1)*10, 100);
-        var efectividadDeAtaque = new Random().Next(efectividadDeAtaqueMin, 101) / 100.0;
-        var efectividadDeDeefensaMin = Math.Min((enemy.Nivel-1)*10, 100);
-        var efectividadDeDefensa = new Random().Next(efectividadDeDeefensaMin, 101) / 200.0;;
-        var defensa = enemy.Stats.Armor + (enemy.Stats.MoveSpeed * 0.1);
-        var daño = (ataque * efectividadDeAtaque) - (defensa * efectividadDeDefensa);
 
-        // Asegurarse de que el daño no sea negativo
-        daño = Math.Max(daño, 0);
-        enemy.Salud -= daño;
-        var saludRestante = (enemy.Salud > 0) ? enemy.Salud : 0;
-        Console.WriteLine($"{enemy.Name} recibe {daño:F2} de daño");
-        Console.WriteLine($"Salud restante: {saludRestante:F2}");//F2 muestra el resultado con dos decimales
-    }
+    
 
 }
