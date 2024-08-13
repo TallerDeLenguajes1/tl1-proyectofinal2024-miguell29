@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 
 namespace ConsoleGame;
 
@@ -39,7 +38,6 @@ public class Personaje
         Salud = stats.Hp;
         Ataque = stats.AttackDamage;
     }
-
 
     
 

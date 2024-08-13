@@ -1,4 +1,3 @@
-using System.Net;
 using System.Text.Json;
 using ConsoleGame;
 
@@ -9,9 +8,9 @@ public static class GameFile
     //*Campo que almacena el path de la carpeta donde se guardaran los archivos
     //se crea un campo para evitar la repeticion de codigo
     // y prop para cambiarlo en un solo lugar en caso de ser necesario
-    private static string carpeta = Path.Combine(Directory.GetCurrentDirectory(),"Files"); 
+    private static string carpeta = Path.Combine(Directory.GetCurrentDirectory(), "Files");
     public static string Carpeta { get; set; }
-    
+
     public static void GuardarPersonajes(List<Personaje> lista)
     {
         var DataJson = JsonSerializer.Serialize(lista);
@@ -21,43 +20,52 @@ public static class GameFile
         {
             Directory.CreateDirectory(carpeta);
         }
-        File.WriteAllText(Path.Combine(carpeta,fileName),DataJson);
+        File.WriteAllText(Path.Combine(carpeta, fileName), DataJson);
     }
     public static List<Personaje> LeerPersonajes(string fileName)
     {
-       // var carpeta = Path.Combine(Directory.GetCurrentDirectory(),"Files");
-        var dataJson = File.ReadAllText(Path.Combine(carpeta,fileName));
+        // var carpeta = Path.Combine(Directory.GetCurrentDirectory(),"Files");
+        var dataJson = File.ReadAllText(Path.Combine(carpeta, fileName));
         List<Personaje> personajes = JsonSerializer.Deserialize<List<Personaje>>(dataJson);
         return personajes;
     }
     public static void GuardarGanador(Personaje ganador)
     {
-        var datajson = JsonSerializer.Serialize(ganador);
-        var datos = new List<string>
-        {
-            datajson
-        };
         var fileName = "HistorialGanadores.json";
-       // var carpeta = Path.Combine(Directory.GetCurrentDirectory(),"Files");
-        if (!Directory.Exists(carpeta)){
-            Directory.CreateDirectory(carpeta);
+        var ListaGanadores = LeerGanadores(fileName);
+
+        if (ListaGanadores != null)
+        {
+            ListaGanadores.Add(ganador);
+            var listaJson = JsonSerializer.Serialize(ListaGanadores);
+            if (!Directory.Exists(carpeta))
+            {
+                Directory.CreateDirectory(carpeta);
+            }
+            File.WriteAllText(Path.Combine(carpeta, fileName), listaJson);
+
         }
-        File.AppendAllLines(Path.Combine(carpeta,fileName),datos);
+        else
+        {
+            var lista = new List<Personaje> { ganador };
+            var datajson = JsonSerializer.Serialize(lista);
+            if (!Directory.Exists(carpeta))
+            {
+                Directory.CreateDirectory(carpeta);
+            }
+            File.WriteAllText(Path.Combine(carpeta, fileName), datajson);
+        }
     }
     public static List<Personaje> LeerGanadores(string fileName)
     {
         //var carpeta = Path.Combine(Directory.GetCurrentDirectory(),"Files");
-        if (Existe(Path.Combine(carpeta,fileName)))
+        if (Existe(Path.Combine(carpeta, fileName)))
         {
-            var listaGanadoresJson = File.ReadAllLines(Path.Combine(carpeta,fileName));//lista de strings con los ganadores en formato json
-            var listaGanadores = new List<Personaje>();
-            foreach (var ganadorJson in listaGanadoresJson)
-            {
-                var ganador = JsonSerializer.Deserialize<Personaje>(ganadorJson);
-                listaGanadores.Add(ganador);
-            }
+            var listaGanadoresJson = File.ReadAllText(Path.Combine(carpeta, fileName));//lista de strings con los ganadores en formato json
+            List<Personaje> listaGanadores = JsonSerializer.Deserialize<List<Personaje>>(listaGanadoresJson);
             return listaGanadores;
-        }else
+        }
+        else
         {
             return null;
         }
@@ -69,7 +77,7 @@ public static class GameFile
         {
             Directory.CreateDirectory(carpeta);
         }
-        return File.Exists(Path.Combine(carpeta,fileName));
+        return File.Exists(Path.Combine(carpeta, fileName));
         /*
         *File.Exists devuelve true si el autor de la llamada tiene los permisos necesarios y 
         *path contiene el nombre de un archivo existente ; de lo contrario, false. 
